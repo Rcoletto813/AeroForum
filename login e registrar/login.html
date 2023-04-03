@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+    <title>Fazer login na AeroForum</title>
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="container">
+
+            <form class="form needs-validation" id="login" action="valida.php">
+                <h1 class="form__title">Fazer login no AeroForum</h1>
+                <div class="form__input-group">
+                    <input type="email" class="form__input" autofocus placeholder="Email da sua conta" required>
+                </div>
+                <div class="form__input-group">
+                    <input type="password" class="form__input" autofocus placeholder="Senha" required>
+                </div>
+                <button class="form__button" type="submit">Entrar</button>
+                <p class="form__text">
+                    <a href="#" class="form__link" style="text-decoration: underline;" data-bs-target="#firebaseLogin"
+                        data-bs-toggle="modal">Outras formas de login</a>
+                </p>
+                <p class="form__text">
+                    <a class="form__link" href="./" id="linkCreateAccount">Não possui uma conta? Crie uma</a>
+                </p>
+            </form>
+
+
+            <!--CRIAR CONTA-->
+            <form class="form form--hidden" id="createAccount" method="post" action="../php/login.php">
+                <h1 class="form__title">Criar uma conta no AeroForum</h1>
+                <div class="form__message form__message--error"></div>
+                <div class="form__input-group">
+                    <input type="text" id="signupUsername" class="form__input" autofocus placeholder="Nome de usuário"
+                        required name="usuarioRegistro">
+                </div>
+                <div class="form__input-group">
+                    <input type="email" class="form__input" autofocus placeholder="Seu email" required
+                        id="emailRegistro" name="emailRegistro">
+                </div>
+                <div class="form__input-group">
+                    <input type="password" class="form__input" autofocus placeholder="Senha" required
+                        id="senhaRegistro" name="senhaRegistro">
+                </div>
+                <div class="form__input-group">
+                    <input type="password" class="form__input" autofocus placeholder="Confirme sua senha" required
+                        id="senhaRegistroConfirmar" name="confirmaSenhaRegistro">
+                </div>
+                <button class="form__button" type="submit">Criar</button>
+                <p class="form__text">
+                    <a href="#" class="form__link" style="text-decoration: underline;"
+                        data-bs-target="#firebaseRegistrar" data-bs-toggle="modal">Outras formas de se registrar</a>
+                </p>
+                <p class="form__text">
+                    <a class="form__link" href="./" id="linkLogin">Já possui uma conta? Faça login</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div id="firebaseRegistrar" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Escolha outra forma de se registrar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">
+                        <button class="btn btn-lg btn-danger btn-login-alternativo" id="authGoogleButton"
+                            onclick="registrarGoogle()"><i class="fa-brands fa-google "></i> Registrar-se com o
+                            Google</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="firebaseLogin" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Escolha outra forma de login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">
+                        <!--<button class="btn btn-lg btn-default github btn-login-alternativo" id="authGitHubButton" onclick="registrarGithub()"><i
+                                class="fa-brands fa-github"></i> Login com o GitHub</button>
+
+                        <button class="btn btn-lg btn-primary btn-login-alternativo" id="authFacebookButton" onclick="registrarFacebook()"><i
+                                class="fa-brands fa-facebook "></i> Login com o Facebook</button>
+
+                        <button class="btn btn-lg btn-info btn-login-alternativo" id="authTwitterButton" onclick="registrarTwitter()"><i
+                                class="fa-brands fa-twitter "></i> Login com o Twitter</button>-->
+                        <button class="btn btn-lg btn-danger btn-login-alternativo" id="authGoogleButton"><i
+                                class="fa-brands fa-google "></i> Login com o Google</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="app.js"></script>
+<script src="form.js"></script>
+<script src="registro-login.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+
+</html>

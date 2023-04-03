@@ -1,0 +1,359 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+/* #1F2532 - azul escuro
+
+#4B8FE3 - azul claro
+
+#EDEDED - cinza */
+
+body {
+    overflow-x: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.cabecalho {
+    background-color: #1F2532;
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.linksUteis {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 1.3rem;
+    align-items: center;
+}
+
+.links {
+    color: #EDEDED;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+}
+
+.links:hover {
+    text-decoration: underline;
+}
+
+.central {
+    position: relative;
+    height: 500px;
+    border-bottom: 3px solid #1F2532;
+}
+
+.background {
+    background-image: url('../imagens/terraEspaco.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    /*height: 500px;*/
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-attachment: fixed;
+    z-index: -1;
+}
+
+.cover {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    color: #EDEDED;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.parallax {
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn {
+    padding: 10px 20px;
+    background-color: #4B8FE3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #1F2532;
+    border: 2px solid #4B8FE3;
+    color: #4B8FE3;
+}
+
+.btnsLogin {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5%;
+}
+
+.quemSomos {
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 3px solid #1F2532;
+}
+
+.textoCaixa {
+    padding: 20px;
+    width: 50%;
+    margin-top: 25px;
+}
+
+.revelar {
+    position: relative;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: all 2s ease;
+}
+
+.revelar.ativar {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.servicos {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    border-bottom: 3px solid #1F2532;
+}
+
+.recursos {
+    font-size: 1.3rem;
+    margin-left: 2rem;
+    padding: 10px;
+    list-style: url('../imagens/setaJato.svg');
+}
+
+.listaRecursos {
+    width: 50%;
+    border-right: 3px solid #1F2532;
+}
+
+.b2Imagem {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.users {
+    padding: 20px;
+    background-color: #add8e6;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    border-bottom: 3px solid #1F2532;
+
+}
+
+.users h2 {
+    text-decoration: underline;
+}
+
+.usuariosFamosos ul {
+    padding: 15px;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.usuariosFamosos li {
+    border: 2px solid #1F2532;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.671);
+    -webkit-transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+}
+
+.usuariosFamosos li:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.usuariosFamosos img {
+    border-bottom: 2px solid #1F2532;
+}
+
+.usuariosFamosos figure {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    background-color: #EDEDED;
+    padding-bottom: 5px;
+}
+
+.facaParte {
+    font-size: 1.2rem;
+    width: 100%;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    border-bottom: 3px solid #1F2532;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.facaParte button {
+    font-size: 1.3rem;
+    width: 15rem;
+    height: 5rem;
+}
+
+.rodape {
+    text-align: center;
+    background-color: #eeeff0;
+    border-bottom: 3px solid #1F2532;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background-color: #008bbace;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    transition: .5s ease;
+}
+
+.container:hover .overlay {
+    bottom: 0;
+    height: 100%;
+}
+
+.texto {
+    width: 100%;
+    color: rgb(0, 0, 0);
+    font-size: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bolder;
+}
+
+footer {
+    list-style: none;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.856);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+footer h4 {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.3rem;
+}
+
+footer p,
+li {
+    font-family: 'Roboto', sans-serif;
+}
+
+.direitos {
+    padding: 20px;
+    font-family: 'Lato', sans-serif;
+    width: 100%;
+    text-align: center;
+}
+
+.animacaoUsuario {
+    font-size: 2rem;
+    border-bottom: 3px solid #1F2532;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bolder;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+span.msg::before {
+    text-decoration: underline;
+    content: '';
+    animation: animacaoMudar infinite 15s linear forwards;
+    color: #4B8FE3;
+}
+
+@keyframes animacaoMudar {
+    0% {
+        content: "ENGENHEIRO";
+    }
+
+    20% {
+        content: "ASTRONAUTA";
+    }
+
+    40% {
+        content: "PILOTO";
+    }
+
+    60% {
+        content: "PROFESSOR";
+    }
+
+    80% {
+        content: "ALUNO";
+    }
+
+    100% {
+        content: "ENTUSIASTA";
+    }
+}
