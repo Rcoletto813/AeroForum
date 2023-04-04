@@ -3,7 +3,7 @@
 define('host', '127.0.0.1');
 define('usuario', 'root');
 define('senha', '');
-define('bancoDados', 'AeroForum');
+define('bancoDados', 'aeroforum');
 
 //CONEXAO NO BANCO
 $conexao = mysqli_connect(host, usuario, senha, bancoDados);

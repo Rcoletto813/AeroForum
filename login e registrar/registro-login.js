@@ -4,14 +4,15 @@ const erro = params.get('erro');
 
 const titulo = params.get('titulo'); //obtem o titulo da mensagem
 const mensagem = params.get('mensagem'); //obtem a mensagem
-const tipo = params.get('tipo'); //obtem o tipo da mensagen --- btn-danger = erro; btn-sucess = deu tudo certo
+const tipo = params.get('tipo'); //obtem o tipo da mensagen --- btn-danger = erro; btn-success = deu tudo certo
+const msgBtn = params.get('btn-msg'); //mensagem do botao de confirma
 
 if (erro) { //houve algum erro que o php indicou
     console.log("hello world");
-    modalAviso(titulo, mensagem, tipo);
+    modalAviso(titulo, mensagem, tipo, msgBtn);
 }
 
-function modalAviso(titulo, mensagem, tipo) {
+function modalAviso(titulo, mensagem, tipo, msgBtn) {
     // criar o modal
     const modal = document.createElement("div");
     modal.setAttribute("id", "modal");
@@ -61,7 +62,7 @@ function modalAviso(titulo, mensagem, tipo) {
     closeButton2.classList.add("btn");
     closeButton2.classList.add(tipo);
     closeButton2.setAttribute("data-bs-dismiss", "modal");
-    closeButton2.textContent = "Entendido";
+    closeButton2.textContent = msgBtn;
     modalFooter.appendChild(closeButton2);
     closeButton2.addEventListener("click", function () {
         modal.remove();

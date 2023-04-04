@@ -14,7 +14,6 @@
 <body>
     <div class="overlay">
         <div class="container">
-            <!--CRIAR CONTA-->
             <form class="form" id="createAccount" method="post" action="../php/login.php">
                 <h1 class="form__title">Criar uma conta no AeroForum</h1>
                 <div class="form__message form__message--error"></div>
@@ -34,7 +33,7 @@
                     <input type="password" class="form__input" autofocus placeholder="Confirme sua senha" required
                         id="senhaRegistroConfirmar" name="confirmaSenhaRegistro">
                 </div>
-                <button class="form__button" type="submit">Criar</button>
+                <button class="form__button" type="submit" name="registro-submit">Criar</button>
                 <p class="form__text">
                     <a href="#" class="form__link" style="text-decoration: underline;"
                         data-bs-target="#firebaseRegistrar" data-bs-toggle="modal">Outras formas de se registrar</a>
