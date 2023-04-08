@@ -1,3 +1,127 @@
+<?php
+
+include '../php/conectar.php';
+
+$idUser = $_GET["uid"]; //id do usuário autenticado
+$query = "SELECT * FROM usuário WHERE Id_User = '$idUser'";
+
+$resultado = mysqli_query($conexao, $query);
+$info_user = array(); //salvar todos os dados do usuário num dicionário
+
+while ($linha = mysqli_fetch_object($resultado)) {
+    $info_user[] = $linha;
+}
+
+/**
+ * Obtém todos os grupos que o usuário faz parte
+ * @param mixed $id_user id do usuário
+ * @param mixed $conexao a conexão com o banco de dados
+ */
+function listaGrupo($id_user, $conexao)
+{
+    $query = "SELECT grupo.Nome, grupo.Descrição, grupo.Categoria
+        FROM grupo INNER JOIN usuariogrupo ON grupo.id_Grupo = usuariogrupo.Grupo_id_Grupo 
+        INNER JOIN usuário ON usuário.Id_User = usuariogrupo.Usuário_Id_User
+        WHERE usuário.Id_User = '$id_user'";
+
+    $resultado = mysqli_query($conexao, $query);
+    while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+        echo '
+            <div class="card-grupo">
+                <h2>' . $linha["Nome"] . '</h2>
+                <button class="btn btn-success">Dar uma olhada</button>
+            </div>';
+    }
+}
+
+/**
+ * Listar os grupos
+ * @param mixed $conexao a conexão com o banco de dados
+ */
+function grupos($conexao)
+{
+    $query = "SELECT Nome, Categoria, Membros, Foto FROM grupo ORDER BY Membros DESC LIMIT 3";
+
+    $resultado = mysqli_query($conexao, $query);
+
+    while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+        echo '
+        <section class="grupo section">
+            <div class="detalhesGrupo">
+                <div class="esquerda">
+                    <img src="'.$linha["Foto"].'" alt="imagem grupo">
+                </div>
+                <div class="central">
+                    <div class="infoGrupo">
+                        <h2 id="tituloGrupo">'.$linha["Nome"].'</h2>
+                        <p id="marcadoresGrupo">'.$linha["Categoria"].'</p>
+                        <span class="participantes">Membros: '.$linha["Membros"].'</span>
+                    </div>
+                </div>
+                <div class="direita">
+                    <button type="button" class="btn btn-success entrar">Participar desse grupo</button>
+                </div>
+            </div>
+        </section>';
+    }
+}
+
+function posts($conexao)
+{
+    $query = "SELECT post.Título, post.Resumo, post.Avaliação, usuário.Username
+    FROM post 
+    INNER JOIN usuário 
+    ON usuário.Id_User = post.Id_User LIMIT 3";
+
+    $resultado = mysqli_query($conexao, $query);
+    while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+        /*echo '
+        <section class="post section">
+            <h2 id="tituloPost">'.$linha["Título"].'</h2>
+            <p id="descricaoPost">'.$linha["Resumo"].'</p>
+            <div class="info">
+                <div class="container">
+                    <button type="button" class="btn btn-outline-info">Acessar</button>
+                    <div class="avaliacao">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </div>
+                </div>
+                <div class="autor">
+                    <a href="#">Autor: '.$linha["Username"].'</a>
+                </div>
+            </div>
+        </section>';*/
+        echo '
+        <section class="post section">
+            <h2 id="tituloPost">'.$linha["Título"].'</h2>
+            <p id="descricaoPost">'.$linha["Resumo"].'</p>
+            <div class="info">
+                <div class="container">
+                    <button type="button" class="btn btn-outline-info">Acessar</button>
+                    <div class="avaliacao">';
+        for ($aval = 0; $aval < $linha["Avaliação"]; $aval++) {
+            echo '<span class="fa fa-star checked"></span>';
+        }
+        for ($avalRestante = 0; $avalRestante < 5 - $aval; $avalRestante++){
+            echo '<span class="fa fa-star"></span>';
+        }
+        //$avalRestante = 5 - $linha["Avaliação"];
+        echo  '
+                </div>
+            </div>
+            <div class="autor">
+                <a href="#">Autor: '.$linha["Username"].'</a>
+            </div>
+            </div>
+        </section>';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -51,7 +175,9 @@
             <button type="button" class="btn btn-info">Fazer um post</button>
             <div class="usuario">
                 <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
-                <span><a href="#">NomeUser</a></span>
+                <span><a href="#">
+                        <?php echo $info_user[0]->Username ?>
+                    </a></span>
 
                 <div class="linhaVertical">|</div>
 
@@ -69,49 +195,12 @@
         <div class="principal">
             <div class="posts" id="posts">
                 <h1>Últimos posts</h1>
+                <?php posts($conexao) ?>
             </div>
             <div class="grupos" id="grupos">
                 <h1>Grupos favoritos da comunidade</h1>
-                <section class="grupo section">
-                    <div class="detalhesGrupo">
-                        <div class="esquerda">
-                            <img src="../imagens/grupos/logoGrupoDefault.png" alt="imagem grupo">
-                        </div>
-                        <div class="central">
-                            <div class="infoGrupo">
-                                <h2 id="tituloGrupo">Nome grupo</h2>
-                                <p id="marcadoresGrupo">#aviões #militar #caças-a-jato</p>
-                                <span class="participantes">
-                                    Membros: 100
-                                </span>
-                            </div>
-                        </div>
-                        <div class="direita">
-                            <button type="button" class="btn btn-success entrar">Participar desse grupo</button>
-                        </div>
-                    </div>
-                </section>
-                <section class="grupo section">
-                    <div class="detalhesGrupo">
-                        <div class="esquerda">
-                            <img src="../imagens/grupos/logoGrupoDefault.png" alt="imagem grupo">
-                        </div>
-                        <div class="central">
-                            <div class="infoGrupo">
-                                <h2 id="tituloGrupo">Nome de grupo muito louco e grande gigante na verdade fwe2wefwefeff3eoi</h2>
-                                <p id="marcadoresGrupo">#aviões #militar #caças-a-jato</p>
-                                <span class="participantes">
-                                    Membros: 100
-                                </span>
-                            </div>
-                        </div>
-                        <div class="direita">
-                            <button type="button" class="btn btn-success entrar">Participar desse grupo</button>
-                        </div>
-                    </div>
-                </section>
+                <?php grupos($conexao) ?>
             </div>
-        </div>
         </div>
         <button class="toast btn btn-success popup" role="alert" aria-live="assertive" aria-atomic="true"
             style="display: block; bottom: 0; position: fixed;"><a href="#gruposConexoes" data-bs-toggle="offcanvas"
@@ -134,10 +223,9 @@
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body"> <!--grupos do usuario-->
-                                <div class="card-grupo">
-                                    <h2>Aviões super loucos da segunda guerra mundial</h2>
-                                    <button class="btn btn-success">Dar uma olhada</button>
-                                </div>
+                                <?php
+                                listaGrupo($info_user[0]->Id_User, $conexao);
+                                ?>
                             </div>
                         </div>
                     </div>

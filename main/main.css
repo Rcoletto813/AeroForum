@@ -194,11 +194,16 @@ section.section:hover {
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
 }
 
 .infoGrupo {
     display: flex;
     flex-direction: column;
+}
+
+.infoGrupo h2 {
+    max-width: 15rem;
 }
 
 .infoGrupo h2,
@@ -264,25 +269,55 @@ li {
     text-align: center;
 }
 
+.card-grupo {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 1px 2px 5px black;
+    border-radius: 4px;
+    gap: 1px;
+    margin-top: 10px;
+}
+
+.card-grupo h2 {
+    font-size: 1.3rem;
+}
 
 @media only screen and (max-width: 428px) {
     header {
-      font-size: 18px;
-      padding: 10px;
+        font-size: 18px;
+        padding: 10px;
     }
-    
+
     nav {
-      padding: 5px;
+        padding: 5px;
     }
-    
+
     .principal {
-      width: 90%;
-      padding: 5px;
-      margin: 10px auto;
+        width: 90%;
+        padding: 5px;
+        margin: 10px auto;
     }
-    
+
     .section {
-      margin-bottom: 10px;
+        margin-bottom: 10px;
     }
-  }
-  
+}
+
+.esquerda {
+    width: fit-content;
+}
+
+.central {
+    width: 1rem;
+    flex: 1;
+}
+
+.direita {
+    width: fit-content;
+    position: absolute;
+    right: 0;
+}
+

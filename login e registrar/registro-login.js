@@ -1,5 +1,5 @@
 // verifica se há um parâmetro 'erro' na URL
-const params = new URLSearchParams(window.location.search);
+/*const params = new URLSearchParams(window.location.search);
 const erro = params.get('erro');
 
 const titulo = params.get('titulo'); //obtem o titulo da mensagem
@@ -11,8 +11,8 @@ if (erro) { //houve algum erro que o php indicou
     console.log("hello world");
     modalAviso(titulo, mensagem, tipo, msgBtn);
 }
-
-function modalAviso(titulo, mensagem, tipo, msgBtn) {
+*/
+function modalAviso(titulo, mensagem, tipo, msgBtn, link) { //titulo de modal ; mensagem do modal ; cor do botão ; mensagem do botão ; link para redirecionamento
     // criar o modal
     const modal = document.createElement("div");
     modal.setAttribute("id", "modal");
@@ -65,6 +65,7 @@ function modalAviso(titulo, mensagem, tipo, msgBtn) {
     closeButton2.textContent = msgBtn;
     modalFooter.appendChild(closeButton2);
     closeButton2.addEventListener("click", function () {
+        window.location.href = link;
         modal.remove();
     });
 
@@ -72,75 +73,97 @@ function modalAviso(titulo, mensagem, tipo, msgBtn) {
     document.body.appendChild(modal);
 }
 
-// CRIAR CONTA //
-/*function registrarGithub() {
-    const provider = new firebase.auth.GithubAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            // O usuário se autenticou com sucesso
-        })
-        .catch((error) => {
-            // Ocorreu um erro ao tentar fazer login
-        });
-}
 
-function registrarFacebook() {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            // O usuário se autenticou com sucesso
-        })
-        .catch((error) => {
-            // Ocorreu um erro ao tentar fazer login
-        });
-}
-
-function registrarTwitter() {
-    const provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            // O usuário se autenticou com sucesso
-        })
-        .catch((error) => {
-            // Ocorreu um erro ao tentar fazer login
-        });
-}*/
-function registrarGoogle() {
+//REGISTRO DE USUÁRIO//
+/*function registrarGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
-        .then((result) => {
+        .then((userCredenciais) => {
+
+            var sign = window.prompt('Você está se sentindo com sorte', 'certamente');
+
+            const user = userCredenciais.user;
+            const userId = user.uid; //id do usuário criado no firebase
+            const userEmail = user.email; //email do usuário criado no firebase
+
+            //mandar tudo para o PHP e salvar no MySql
+            const xhr = new XMLHttpRequest();
+            const url = "../php/registrar.php"
+            const parametros = `username=${username}&email=${email}&uid=${userId}`;
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Redireciona o usuário para a página de perfil
+                    window.location.href = "login.html";
+                }
+            };
+            xhr.send(parametros);
+            
+
             alert("Conta criada com sucesso")
         })
         .catch((error) => {
             // Ocorreu um erro ao tentar fazer login
         });
-}
+}*/
 
-/*function criarContaEmailSenha() {
-    const email = document.getElementById("emailRegistro");
-    const senha = document.getElementById("senhaRegistro");
-    const confirmaSenha = document.getElementById("senhaRegistroConfirmar");
+function criarContaEmailSenha() {
+    const username = document.getElementById("usernameRegistro").value;
+    const email = document.getElementById("emailRegistro").value;
+    const senha = document.getElementById("senhaRegistro").value;
+    const confirmaSenha = document.getElementById("senhaRegistroConfirmar").value;
 
-    if (senha.value != confirmaSenha.value) { // o usuário colocou senhas não correspondentes 
-        modalAviso("Dado inválido", "As senhas não correspondem", "btn-danger");
+    if (!username || !email || !senha || !confirmaSenha) {
+        modalAviso("Dado inválido", "Preencha todos os campos.", "btn-danger", "Entendido!", "#");
+        return;
+    }
+
+    if (senha != confirmaSenha) { // o usuário colocou senhas não correspondentes 
+        modalAviso("Dado inválido", "As senhas não correspondem.", "btn-danger", "Entendido!", "#");
         senha.value = "";
         confirmaSenha.value = "";
         return;
     }
 
-    firebase.auth().createUserWithEmailAndPassword(email.value, senha.value)
-        .then(function () {
-            modalAviso("Sucesso", "Sua conta foi criada com sucesso. Agora é só fazer login", "btn-success");
+    firebase.auth().createUserWithEmailAndPassword(email, senha)
+        .then(function (userCredenciais) {
+            const user = userCredenciais.user;
+            const userId = user.uid; //id do usuário criado no firebase
+
+            //mandar tudo para o PHP e salvar no MySql
+            const xhr = new XMLHttpRequest();
+            const url = "../php/registrar.php"
+            const parametros = `username=${username}&email=${email}&uid=${userId}`;
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Redireciona o usuário para a página de perfil
+                    modalAviso("Sucesso", "Sua conta foi criada com sucesso. Agora é só fazer login.", "btn-success", "Eba!", "login.html");
+                }
+            };
+            xhr.send(parametros);
         })
         .catch(function (error) {
-            modalAviso("Erro", error.message, "btn-danger");
+            modalAviso("Erro", error.message, "btn-danger", "Entendido", "#");
         })
 }
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    document.getElementById("createAccount").addEventListener("submit", function (event) {
-        event.preventDefault();
-        criarContaEmailSenha();
-    });
-});*/
 /////////////////////////////////////////////////////////
+
+//LOGIN DE USUARIO//
+function fazerLoginEmailSenha() {
+    const email = document.getElementById("emailLogin").value;
+    const senha = document.getElementById("senhaLogin").value;
+
+    firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then((userCredenciais) => {
+            const user = userCredenciais.user;
+
+            window.location.href = "../main/main.php?uid=" + user.uid; //id do usuário como parametro
+        })
+        .catch((error) => {
+            // Erro ao fazer login, exibe mensagem de erro
+            modalAviso("Erro", error.message, "btn-danger", "Entendido", "#");
+        });
+}

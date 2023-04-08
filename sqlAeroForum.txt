@@ -21,7 +21,7 @@ USE `AeroForum` ;
 -- Table `AeroForum`.`Usuário`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AeroForum`.`Usuário` (
-  `Id_User` INT NOT NULL AUTO_INCREMENT,
+  `Id_User` VARCHAR(140) NOT NULL,
   `Username` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(120) NOT NULL,
   `Senha` VARCHAR(45) NOT NULL,
@@ -50,7 +50,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AeroForum`.`Post` (
   `id_Post` INT NOT NULL AUTO_INCREMENT,
-  `Id_User` INT NOT NULL,
+  `Id_User` VARCHAR(140) NOT NULL,
   `Título` VARCHAR(45) NOT NULL,
   `Conteúdo` LONGTEXT NOT NULL,
   `Categoria(s)` VARCHAR(60) NULL,
@@ -73,7 +73,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AeroForum`.`Comentario_Post` (
   `id_Comentario_Post` INT NOT NULL AUTO_INCREMENT,
-  `Id_User` INT NOT NULL COMMENT 'Usuário que fez o comentário\n',
+  `Id_User` VARCHAR(140) NOT NULL COMMENT 'Usuário que fez o comentário\n',
   `id_Post` INT NOT NULL,
   `Conteúdo` VARCHAR(340) NOT NULL,
   `Data_Criação` DATETIME NOT NULL,
@@ -99,7 +99,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `AeroForum`.`Comentario_Grupo` (
   `id_Comentario_Grupo` INT NOT NULL AUTO_INCREMENT,
   `id_Grupo` INT NOT NULL,
-  `Id_User` INT NOT NULL,
+  `Id_User` VARCHAR(140) NOT NULL,
   `Conteúdo` VARCHAR(340) NOT NULL,
   `Data_Criação` DATETIME NOT NULL,
   PRIMARY KEY (`id_Comentario_Grupo`),
@@ -122,7 +122,7 @@ ENGINE = InnoDB;
 -- Table `AeroForum`.`UsuarioGrupo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AeroForum`.`UsuarioGrupo` (
-  `Usuário_Id_User` INT NOT NULL,
+  `Usuário_Id_User` VARCHAR(140) NOT NULL,
   `Grupo_id_Grupo` INT NOT NULL,
   INDEX `fk_UsuarioGrupo_Usuário1_idx` (`Usuário_Id_User` ASC) ,
   INDEX `fk_UsuarioGrupo_Grupo1_idx` (`Grupo_id_Grupo` ASC) ,
