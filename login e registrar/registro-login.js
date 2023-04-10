@@ -160,7 +160,8 @@ function fazerLoginEmailSenha() {
         .then((userCredenciais) => {
             const user = userCredenciais.user;
 
-            window.location.href = "../main/main.php?uid=" + user.uid; //id do usuário como parametro
+            //window.location.href = "../main/main.php?uid=" + user.uid; //id do usuário como parametro
+            window.location.href = "../php/verificaLogin.php?uid=" + user.uid; //id do usuário como parametro
         })
         .catch((error) => {
             // Erro ao fazer login, exibe mensagem de erro

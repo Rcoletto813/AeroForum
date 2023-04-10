@@ -1,16 +1,7 @@
 <?php
 
 include '../php/conectar.php';
-
-$idUser = $_GET["uid"]; //id do usuário autenticado
-$query = "SELECT * FROM usuário WHERE Id_User = '$idUser'";
-
-$resultado = mysqli_query($conexao, $query);
-$info_user = array(); //salvar todos os dados do usuário num dicionário
-
-while ($linha = mysqli_fetch_object($resultado)) {
-    $info_user[] = $linha;
-}
+include '../php/paginaProtegida.php';
 
 /**
  * Obtém todos os grupos que o usuário faz parte
@@ -49,13 +40,13 @@ function grupos($conexao)
         <section class="grupo section">
             <div class="detalhesGrupo">
                 <div class="esquerda">
-                    <img src="'.$linha["Foto"].'" alt="imagem grupo">
+                    <img src="' . $linha["Foto"] . '" alt="imagem grupo">
                 </div>
                 <div class="central">
                     <div class="infoGrupo">
-                        <h2 id="tituloGrupo">'.$linha["Nome"].'</h2>
-                        <p id="marcadoresGrupo">'.$linha["Categoria"].'</p>
-                        <span class="participantes">Membros: '.$linha["Membros"].'</span>
+                        <h2 id="tituloGrupo">' . $linha["Nome"] . '</h2>
+                        <p id="marcadoresGrupo">' . $linha["Categoria"] . '</p>
+                        <span class="participantes">Membros: ' . $linha["Membros"] . '</span>
                     </div>
                 </div>
                 <div class="direita">
@@ -75,30 +66,10 @@ function posts($conexao)
 
     $resultado = mysqli_query($conexao, $query);
     while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
-        /*echo '
-        <section class="post section">
-            <h2 id="tituloPost">'.$linha["Título"].'</h2>
-            <p id="descricaoPost">'.$linha["Resumo"].'</p>
-            <div class="info">
-                <div class="container">
-                    <button type="button" class="btn btn-outline-info">Acessar</button>
-                    <div class="avaliacao">
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                    </div>
-                </div>
-                <div class="autor">
-                    <a href="#">Autor: '.$linha["Username"].'</a>
-                </div>
-            </div>
-        </section>';*/
         echo '
         <section class="post section">
-            <h2 id="tituloPost">'.$linha["Título"].'</h2>
-            <p id="descricaoPost">'.$linha["Resumo"].'</p>
+            <h2 id="tituloPost">' . $linha["Título"] . '</h2>
+            <p id="descricaoPost">' . $linha["Resumo"] . '</p>
             <div class="info">
                 <div class="container">
                     <button type="button" class="btn btn-outline-info">Acessar</button>
@@ -106,15 +77,14 @@ function posts($conexao)
         for ($aval = 0; $aval < $linha["Avaliação"]; $aval++) {
             echo '<span class="fa fa-star checked"></span>';
         }
-        for ($avalRestante = 0; $avalRestante < 5 - $aval; $avalRestante++){
+        for ($avalRestante = 0; $avalRestante < 5 - $aval; $avalRestante++) {
             echo '<span class="fa fa-star"></span>';
         }
-        //$avalRestante = 5 - $linha["Avaliação"];
-        echo  '
+        echo '
                 </div>
             </div>
             <div class="autor">
-                <a href="#">Autor: '.$linha["Username"].'</a>
+                <a href="#">Autor: ' . $linha["Username"] . '</a>
             </div>
             </div>
         </section>';
@@ -158,7 +128,7 @@ function posts($conexao)
                 </ul>
             </li>
             <!--<li><a href="#" class="linkPrincipal">Perfil</a></li>-->
-            <li><a href="#" class="linkPrincipal">Sair</a></li>
+            <li><a href="../php/desconectar.php" class="linkPrincipal">Sair</a></li>
         </ul>
         <nav class="navbar bg-light">
             <div class="container-fluid">
@@ -176,7 +146,7 @@ function posts($conexao)
             <div class="usuario">
                 <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
                 <span><a href="#">
-                        <?php echo $info_user[0]->Username ?>
+                        <?php echo $_SESSION["Username"] ?>
                     </a></span>
 
                 <div class="linhaVertical">|</div>
@@ -224,7 +194,7 @@ function posts($conexao)
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body"> <!--grupos do usuario-->
                                 <?php
-                                listaGrupo($info_user[0]->Id_User, $conexao);
+                                listaGrupo($_SESSION["Id"], $conexao);
                                 ?>
                             </div>
                         </div>
