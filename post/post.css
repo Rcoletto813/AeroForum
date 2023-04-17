@@ -111,6 +111,20 @@ main {
     border: none;
 }
 
+.comentariosCampos {
+    /*display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.publiComent {
+    margin-top: auto;
+}
+
 .comentario {
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
