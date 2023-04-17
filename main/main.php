@@ -145,9 +145,11 @@ function posts($conexao)
             <button type="button" class="btn btn-info">Fazer um post</button>
             <div class="usuario">
                 <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
-                <span><a href="#">
+                <span>
+                    <a href="#">
                         <?php echo $_SESSION["Username"] ?>
-                    </a></span>
+                    </a>
+                </span>
 
                 <div class="linhaVertical">|</div>
 

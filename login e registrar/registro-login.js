@@ -12,6 +12,8 @@ if (erro) { //houve algum erro que o php indicou
     modalAviso(titulo, mensagem, tipo, msgBtn);
 }
 */
+const provider = new firebase.auth.GoogleAuthProvider();
+
 function modalAviso(titulo, mensagem, tipo, msgBtn, link) { //titulo de modal ; mensagem do modal ; cor do botão ; mensagem do botão ; link para redirecionamento
     // criar o modal
     const modal = document.createElement("div");
@@ -75,38 +77,40 @@ function modalAviso(titulo, mensagem, tipo, msgBtn, link) { //titulo de modal ; 
 
 
 //REGISTRO DE USUÁRIO//
-/*function registrarGoogle() {
+function registrarGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithPopup(provider)
         .then((userCredenciais) => {
 
-            var sign = window.prompt('Você está se sentindo com sorte', 'certamente');
+            //var sign = window.prompt('Você está se sentindo com sorte', 'certamente');
 
             const user = userCredenciais.user;
             const userId = user.uid; //id do usuário criado no firebase
             const userEmail = user.email; //email do usuário criado no firebase
+            const username = user.displayName;
+
+            console.log(username);
 
             //mandar tudo para o PHP e salvar no MySql
             const xhr = new XMLHttpRequest();
             const url = "../php/registrar.php"
-            const parametros = `username=${username}&email=${email}&uid=${userId}`;
+            const parametros = `username=${username}&email=${userEmail}&uid=${userId}&username=${username}`;
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // Redireciona o usuário para a página de perfil
-                    window.location.href = "login.html";
+                    modalAviso("Sucesso", "Sua conta foi criada com sucesso. Agora é só fazer login.", "btn-success", "Eba!", "login.html");
+                    //window.location.href = "login.html";
                 }
             };
             xhr.send(parametros);
-            
-
-            alert("Conta criada com sucesso")
+            //alert("Conta criada com sucesso")
         })
         .catch((error) => {
-            // Ocorreu um erro ao tentar fazer login
+            modalAviso("Dado inválido", error, "btn-danger", "Entendido!", "#");
         });
-}*/
+}
 
 function criarContaEmailSenha() {
     const username = document.getElementById("usernameRegistro").value;
@@ -165,6 +169,19 @@ function fazerLoginEmailSenha() {
         })
         .catch((error) => {
             // Erro ao fazer login, exibe mensagem de erro
+            modalAviso("Erro", error.message, "btn-danger", "Entendido", "#");
+        });
+}
+
+function fazerLoginGoogle() {
+    firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            // O usuário foi autenticado com sucesso
+            const user = result.user;
+            window.location.href = "../php/verificaLogin.php?uid=" + user.uid;
+        })
+        .catch((error) => {
+            // Ocorreu um erro ao autenticar o usuário
             modalAviso("Erro", error.message, "btn-danger", "Entendido", "#");
         });
 }
