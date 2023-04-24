@@ -59,7 +59,7 @@ function grupos($conexao)
 
 function posts($conexao)
 {
-    $query = "SELECT post.Título, post.Resumo, post.Avaliação, usuário.Username
+    $query = "SELECT post.Título, post.Resumo, post.Avaliação, post.id_Post, usuário.Username
     FROM post 
     INNER JOIN usuário 
     ON usuário.Id_User = post.Id_User LIMIT 3";
@@ -72,7 +72,7 @@ function posts($conexao)
             <p id="descricaoPost">' . $linha["Resumo"] . '</p>
             <div class="info">
                 <div class="container">
-                    <button type="button" class="btn btn-outline-info">Acessar</button>
+                    <a href="../post/post.php?id= '. $linha["id_Post"] .'"><button type="button" class="btn btn-outline-info">Acessar</button></a>
                     <div class="avaliacao">';
         for ($aval = 0; $aval < $linha["Avaliação"]; $aval++) {
             echo '<span class="fa fa-star checked"></span>';
@@ -128,7 +128,7 @@ function posts($conexao)
                 </ul>
             </li>
             <!--<li><a href="#" class="linkPrincipal">Perfil</a></li>-->
-            <li><a href="../php/desconectar.php" class="linkPrincipal">Sair</a></li>
+            <li><a href="../php/logout.php" class="linkPrincipal">Sair</a></li>
         </ul>
         <nav class="navbar bg-light">
             <div class="container-fluid">

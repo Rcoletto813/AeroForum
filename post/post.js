@@ -15,14 +15,14 @@ function avalia(nota) {
     if (nota == 1) {
         avaliaPositivo.classList.add("fa-shake");
         avaliaPositivo.style.fill = "#fa9214";
-        setTimeout( () => {
+        setTimeout(() => {
             avaliaPositivo.classList.remove("fa-shake");
         }, 1000);
     }
     if (nota == -1) {
         avaliaNegativo.classList.add("fa-shake");
         avaliaNegativo.style.fill = "#fa9214";
-        setTimeout( () => {
+        setTimeout(() => {
             avaliaNegativo.classList.remove("fa-shake");
         }, 1000);
     }
