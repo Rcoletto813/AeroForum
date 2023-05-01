@@ -27,9 +27,40 @@ function comentario($conexao, $idPost)
 
 }
 
+function checarAvaliacao($conexao, $idPost)
+{ //ver se o usuário já avaliou o post alguma vez
+    $idUser = $_SESSION['Id'];
+    $query = "SELECT * FROM `avaliacao_post` WHERE Id_User = '$idUser' and Id_Post = '$idPost'";
+
+    $resultado = mysqli_query($conexao, $query);
+    if (mysqli_num_rows($resultado) > 0) { //o user já fez uma avaliação aqui
+        $linha = mysqli_fetch_assoc($resultado);
+        $nota = $linha["nota"]; //checar se a nota era +1 ou -1
+
+        if ($nota == 1) {
+            echo "
+            <script>
+                const notaHTML = document.getElementById('notaUser');
+                const avaliaPositivo = document.getElementById('avalia1');
+                avaliaPositivo.style.fill = '#fa9214';
+                notaHTML.textContent = 1;
+            </script>";
+        }
+        if ($nota == -1) {
+            echo "
+            <script> 
+                const notaHTML = document.getElementById('notaUser');
+                const avaliaNegativo = document.getElementById('avalia-1');
+                avaliaNegativo.style.fill = '#fa9214';
+                notaHTML.textContent = -1;
+            </script>";
+        }
+    }
+}
+
 function listarCategorias($conexao, $idPost)
 {
-    $query = "SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(post.Categoria, ';', n.digit+1), ';', -1) as categoria
+    $query = "SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(post.Categoria, '#', n.digit+1), '#', -1) as categoria
     FROM post
     INNER JOIN
     (
@@ -37,14 +68,20 @@ function listarCategorias($conexao, $idPost)
         UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 
         UNION ALL SELECT 8 UNION ALL SELECT 9
     ) n
-    ON LENGTH(post.Categoria) - LENGTH(REPLACE(post.Categoria, ';', '')) >= n.digit
-    WHERE post.id_Post = '$idPost';"; //selecionar cada uma das categorias do post. Retorna tudo numa coluna nomeada categoria
+    ON LENGTH(post.Categoria) - LENGTH(REPLACE(post.Categoria, '#', '')) >= n.digit
+    WHERE post.id_Post = '$idPost';"; // selecionar cada uma das categorias do post. Retorna tudo numa coluna nomeada categoria
 
-    $resultado = mysqli_query($conexao, $query);
+$resultado = mysqli_query($conexao, $query);
 
-    while ($linha = mysqli_fetch_assoc($resultado)) {
-        echo '<a href="#">#' . $linha["categoria"] . '</a>';
+while ($linha = mysqli_fetch_assoc($resultado)) {
+    $categorias = explode("#", $linha["categoria"]);
+    foreach ($categorias as $categoria) {
+        if (!empty($categoria)) {
+            echo '<a href="#">#' . $categoria . '</a>';
+        }
     }
+}
+
 }
 
 $query = "SELECT usuário.Username, usuário.Patente, post.Título, post.Conteúdo
@@ -53,7 +90,6 @@ INNER JOIN usuário ON post.Id_User = usuário.Id_User
 WHERE post.id_Post = '$idPost'";
 
 $resultado = mysqli_query($conexao, $query);
-
 $valores = mysqli_fetch_assoc($resultado);
 
 ?>
@@ -147,6 +183,7 @@ $valores = mysqli_fetch_assoc($resultado);
                         style="color: black;">Acessar comentários</a>
                 </button>
             </div>
+            <a href="../main/main.php"><button type="button" class="btn btn-primary">Voltar para a página principal</button></a>
         </section>
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="coments" aria-labelledby="offcanvasBottomLabel"
             style="height: 75%;">
@@ -200,7 +237,7 @@ $valores = mysqli_fetch_assoc($resultado);
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
-    console.log(alertPlaceholder)
+    //console.log(alertPlaceholder)
 
     const alert = () => {
         const wrapper = document.createElement('div');
@@ -218,3 +255,36 @@ $valores = mysqli_fetch_assoc($resultado);
 </script>
 
 </html>
+
+<?php
+
+//ver se o usuário já avaliou o post alguma vez
+$idUser = $_SESSION['Id'];
+$query = "SELECT * FROM `avaliacao_post` WHERE Id_User = '$idUser' and Id_Post = '$idPost'";
+
+$resultado = mysqli_query($conexao, $query);
+if (mysqli_num_rows($resultado) > 0) { //o user já fez uma avaliação aqui
+    $linha = mysqli_fetch_assoc($resultado);
+    $nota = $linha["nota"]; //checar se a nota era +1 ou -1
+
+    if ($nota == 1) {
+        echo "
+        <script>
+            const notaHTML = document.getElementById('notaUser');
+            const avaliaPositivo = document.getElementById('avalia1');
+            avaliaPositivo.style.fill = '#fa9214';
+            notaHTML.textContent = 1;
+        </script>";
+    }
+    if ($nota == -1) {
+        echo "
+        <script> 
+            const notaHTML = document.getElementById('notaUser');
+            const avaliaNegativo = document.getElementById('avalia-1');
+            avaliaNegativo.style.fill = '#fa9214';
+            notaHTML.textContent = -1;
+        </script>";
+    }
+}
+
+?>

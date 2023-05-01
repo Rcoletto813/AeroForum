@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+/*font-family: 'Lato', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+/*font-family: 'Open Sans', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+/*font-family: 'Roboto', sans-serif;*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: #1F2532;
+    color: #EDEDED;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.usuario a {
+    font-size: large;
+    text-decoration: none;
+    color: black;
+}
+
+.usuario a:hover {
+    text-decoration: underline;
+}
+
+main {
+    width: 100%;
+    padding: 20px;
+}
+
+.postCompleto {
+    border: 1px solid lightgrey;
+    padding: 10px;
+}
+
+.btnsAcao {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}

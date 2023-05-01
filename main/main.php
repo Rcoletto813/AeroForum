@@ -61,8 +61,9 @@ function posts($conexao)
 {
     $query = "SELECT post.Título, post.Resumo, post.Avaliação, post.id_Post, usuário.Username
     FROM post 
-    INNER JOIN usuário 
-    ON usuário.Id_User = post.Id_User LIMIT 3";
+    INNER JOIN usuário ON usuário.Id_User = post.Id_User 
+    ORDER BY post.id_Post DESC
+    LIMIT 3";
 
     $resultado = mysqli_query($conexao, $query);
     while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -142,7 +143,7 @@ function posts($conexao)
     </nav>
     <div class="conteudoPerfil">
         <div class="user">
-            <button type="button" class="btn btn-info">Fazer um post</button>
+            <a href="../criar post/criarPost.php"><button type="button" class="btn btn-info">Fazer um post</button></a>
             <div class="usuario">
                 <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
                 <span>
