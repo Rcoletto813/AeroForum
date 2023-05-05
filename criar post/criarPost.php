@@ -55,7 +55,7 @@ include '../php/paginaProtegida.php';
                     <b>Dica:</b> Se você quiser aumentar o tamanho dessa caixa de texto utilize seu mouse na canto
                     inferior direito desta caixa
                 </span>
-                <textarea name="conteudo" class="input conteudo form-control" required
+                <textarea style="height: 200px;" name="conteudo" class="input conteudo form-control" required
                     placeholder="Para fazer uma boa publicação você precisa escrever um conteúdo adequado e bem organizado. Faça isso aqui"></textarea>
             </div>
             <div class="campos">

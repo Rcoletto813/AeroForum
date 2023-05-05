@@ -29,7 +29,7 @@ function publicarPost($titulo, $conteudo, $tags, $resumo, $idUser, $conexao)
         $primeira_linhaID = mysqli_fetch_array($resultado);
         $idPost = $primeira_linhaID[0];
 
-        header('Location: ../post/post.php?id= ' . $idPost . '');
+        header('Location: ../post/post.php?id= ' . $idPost . '?sucesso=2');
     }
 }
 

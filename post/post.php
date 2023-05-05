@@ -71,16 +71,16 @@ function listarCategorias($conexao, $idPost)
     ON LENGTH(post.Categoria) - LENGTH(REPLACE(post.Categoria, '#', '')) >= n.digit
     WHERE post.id_Post = '$idPost';"; // selecionar cada uma das categorias do post. Retorna tudo numa coluna nomeada categoria
 
-$resultado = mysqli_query($conexao, $query);
+    $resultado = mysqli_query($conexao, $query);
 
-while ($linha = mysqli_fetch_assoc($resultado)) {
-    $categorias = explode("#", $linha["categoria"]);
-    foreach ($categorias as $categoria) {
-        if (!empty($categoria)) {
-            echo '<a href="#">#' . $categoria . '</a>';
+    while ($linha = mysqli_fetch_assoc($resultado)) {
+        $categorias = explode("#", $linha["categoria"]);
+        foreach ($categorias as $categoria) {
+            if (!empty($categoria)) {
+                echo '<a href="#">#' . $categoria . '</a>';
+            }
         }
     }
-}
 
 }
 
@@ -116,6 +116,7 @@ $valores = mysqli_fetch_assoc($resultado);
     <nav style="--bs-breadcrumb-divider: '>'; display: flex; text-align: center; justify-content: space-around;"
         aria-label="breadcrumb">
         <ol class="breadcrumb" style="--bs-breadcrumb-margin-bottom: unset;">
+            <li class="breadcrumb-item"><a href="../main/main.php">Retornar para página principal</a></li>
             <li class="breadcrumb-item">Leitura</li>
             <li class="breadcrumb-item active" aria-current="page">
                 <?php echo $valores["Título"]; ?>
@@ -183,7 +184,8 @@ $valores = mysqli_fetch_assoc($resultado);
                         style="color: black;">Acessar comentários</a>
                 </button>
             </div>
-            <a href="../main/main.php"><button type="button" class="btn btn-primary">Voltar para a página principal</button></a>
+            <a href="../main/main.php"><button type="button" class="btn btn-primary">Voltar para a página
+                    principal</button></a>
         </section>
         <div class="offcanvas offcanvas-bottom" tabindex="-1" id="coments" aria-labelledby="offcanvasBottomLabel"
             style="height: 75%;">
@@ -239,18 +241,21 @@ $valores = mysqli_fetch_assoc($resultado);
     const alertPlaceholder = document.getElementById('liveAlertPlaceholder');
     //console.log(alertPlaceholder)
 
-    const alert = () => {
+    const alert = (msg) => {
         const wrapper = document.createElement('div');
         wrapper.innerHTML = [
             `<div class="alert alert-success alert-dismissible" role="alert">`,
-            `   <div>Seu comentário foi publicado com sucesso!</div>`,
+            `   <div>${msg}</div>`,
             '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
             '</div>'
         ].join('');
         alertPlaceholder.append(wrapper);
     }
-    if (window.location.search.includes('sucesso=1')) {
-        alert();
+    if (window.location.search.includes('sucesso=1')) { //comentário feito com sucesso
+        alert("Seu comentário foi publicado com sucesso!");
+    }
+    if (window.location.search.includes("sucesso=2")) { //post publicado com sucesso
+        alert("Seu post foi publicado com sucesso!");
     }
 </script>
 

@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+/*font-family: 'Lato', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+/*font-family: 'Open Sans', sans-serif;*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+/*font-family: 'Roboto', sans-serif;*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    background-color: #1F2532;
+    color: #EDEDED;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5rem;
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.usuario a {
+    font-size: large;
+    text-decoration: none;
+    color: black;
+}
+
+.usuario a:hover {
+    text-decoration: underline;
+}
+
+.info-grupo {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+}
+
+.recursos-grupo {
+    width: 25%;
+    border-right: 1px solid lightgrey;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.user-item:hover {
+    background-color: lightgrey;
+}
+
+.user-avatar img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    color: black;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.canais-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sub-canal {
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: large;
+}
+
+.sub-canal:hover {
+    background-color: lightgrey;
+}
+
+.bate-papo {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+
+.msg {
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    border-bottom: 1px solid lightgrey;
+    border-top: 1px solid lightgrey;
+}
+
+.msg:hover {
+    background-color: azure;
+}
+
+.msg span {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+.escrever {
+    bottom: 0;
+    position: absolute;
+    width: 75%;
+    display: flex;
+}
+
+.escrever input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.escrever button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.escrever button:hover {
+    background-color: #3e8e41;
+}
+
+.escrever button:active {
+    background-color: #2962ff;
+    box-shadow: none;
+}
