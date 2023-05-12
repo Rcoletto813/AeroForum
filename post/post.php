@@ -104,6 +104,7 @@ $valores = mysqli_fetch_assoc($resultado);
     <link rel="stylesheet" href="post.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v6.4.0/css/all.css">
+    <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
     <title>
         <?php echo $valores["Título"]; ?>
     </title>

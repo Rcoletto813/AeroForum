@@ -10,7 +10,7 @@ include '../php/paginaProtegida.php';
  */
 function listaGrupo($id_user, $conexao)
 {
-    $query = "SELECT grupo.Nome, grupo.Descrição, grupo.Categoria
+    $query = "SELECT grupo.Nome, grupo.Descrição, grupo.Categoria, grupo.id_Grupo
         FROM grupo INNER JOIN usuariogrupo ON grupo.id_Grupo = usuariogrupo.Grupo_id_Grupo 
         INNER JOIN usuário ON usuário.Id_User = usuariogrupo.Usuário_Id_User
         WHERE usuário.Id_User = '$id_user'";
@@ -20,7 +20,7 @@ function listaGrupo($id_user, $conexao)
         echo '
             <div class="card-grupo">
                 <h2>' . $linha["Nome"] . '</h2>
-                <button class="btn btn-success">Dar uma olhada</button>
+                <a href="../grupo/grupo.php?IdGrupo='. $linha["id_Grupo"] .'&IdSubcanal=0"><button class="btn btn-success" >Dar uma olhada</button></a>
             </div>';
     }
 }
@@ -31,7 +31,7 @@ function listaGrupo($id_user, $conexao)
  */
 function grupos($conexao)
 {
-    $query = "SELECT Nome, Categoria, Membros, Foto FROM grupo ORDER BY Membros DESC LIMIT 3";
+    $query = "SELECT Nome, Categoria, Membros, Foto, id_Grupo FROM grupo ORDER BY Membros DESC LIMIT 3";
 
     $resultado = mysqli_query($conexao, $query);
 
@@ -50,7 +50,7 @@ function grupos($conexao)
                     </div>
                 </div>
                 <div class="direita">
-                    <button type="button" class="btn btn-success entrar">Participar desse grupo</button>
+                    <a href="../php/adicionarMembro.php?IdGrupo='. $linha["id_Grupo"].'"><button type="button" class="btn btn-success entrar">Participar desse grupo</button></a>
                 </div>
             </div>
         </section>';
@@ -104,6 +104,7 @@ function posts($conexao)
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -143,7 +144,9 @@ function posts($conexao)
     </nav>
     <div class="conteudoPerfil">
         <div class="user">
-            <a href="../criar post/criarPost.php"><button type="button" class="btn btn-info">Fazer um post</button></a>
+            <a href="../criar post/criarPost.php"><button type="button" class="btn btn-info" style="width: 8rem;">Fazer um post</button></a>
+            <span>|</span>
+            <a href="../criar grupo/criarGrupo.php"><button type="button" class="btn btn-info" style="width: 10rem;">Criar um grupo</button></a>
             <div class="usuario">
                 <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
                 <span>

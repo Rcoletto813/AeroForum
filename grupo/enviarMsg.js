@@ -1,5 +1,6 @@
 function enviarMensagem(idGrupo, idSubcanal, username, idUsername, conteudo) {
-    firebase.database().ref(`${idGrupo}/${idSubcanal}`).once('value', function (snapshot) {
+    firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).once('value', function (snapshot) {
+        console.log(snapshot.val());
         const ultimaMsgNumero = Object.keys(snapshot.val()).pop();
         const novaMsg = {
             IdUser: idUsername,
@@ -7,16 +8,25 @@ function enviarMensagem(idGrupo, idSubcanal, username, idUsername, conteudo) {
             Data: firebase.database.ServerValue.TIMESTAMP,
             Conteudo: conteudo
         };
-        firebase.database().ref(`${idGrupo}/${idSubcanal}`).child(parseInt(ultimaMsgNumero) + 1).set(novaMsg);
+        firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).child(parseInt(ultimaMsgNumero) + 1).set(novaMsg);
     });
+    /*const novaMsg = {
+        IdUser: idUsername,
+        Username: username,
+        Data: firebase.database.ServerValue.TIMESTAMP,
+        Conteudo: conteudo
+    };*/
+    //console.log(idGrupo, idSubcanal);
+    //firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).set(novaMsg)
 }
 
-document.getElementById("msg").addEventListener("keypress", function(event) {
+
+document.getElementById("msg").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
-      event.preventDefault();
-      document.getElementById("enviar").click();
+        event.preventDefault();
+        document.getElementById("enviar").click();
     }
-  });
+});
 
 document.getElementById("enviar").addEventListener("click", function () {
     const idGrupo = document.getElementById("idGrupo");

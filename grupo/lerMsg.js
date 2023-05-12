@@ -1,9 +1,9 @@
-function carregarMensagens(idGrupo, idSubcanal) {
+function carregarMensagens(idGrupo, idSubcanal, username) {
     /*  <div class="msg">
         <span><a href="#">Autor-</a> mensagem1</span>
     </div>
     */
-    firebase.database().ref(`${idGrupo}/${idSubcanal}`).limitToLast(25).once('value', function (snapshot) {
+    firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).limitToLast(25).once('value', function (snapshot) {
         snapshot.forEach(function (item) {
             const caixaMsg = document.createElement("div");
             caixaMsg.classList.add("msg");
@@ -23,7 +23,7 @@ function carregarMensagens(idGrupo, idSubcanal) {
         });
     });
 
-    firebase.database().ref(`${idGrupo}/${idSubcanal}`).limitToLast(1).on('value', function (snapshot) {
+    firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).limitToLast(1).on('value', function (snapshot) {
         snapshot.forEach(function (item) {
             const caixaMsg = document.createElement("div");
             caixaMsg.classList.add("msg");
@@ -31,7 +31,7 @@ function carregarMensagens(idGrupo, idSubcanal) {
             const conteudoMsg = document.createElement("span");
             const linkUsuario = document.createElement("a");
             linkUsuario.href = "#";
-            linkUsuario.textContent = item.val().Username;
+            linkUsuario.textContent = username;
             conteudoMsg.appendChild(linkUsuario);
             conteudoMsg.appendChild(document.createTextNode(" - " + item.val().Conteudo));
 
@@ -51,4 +51,4 @@ const idSubcanal = params.get("IdSubcanal");
 const username = params.get("username");
 const idUsername =  params.get("idUsername");
 
-carregarMensagens(idGrupo, idSubcanal);
+carregarMensagens(idGrupo, idSubcanal, username);

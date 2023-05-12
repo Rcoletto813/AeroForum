@@ -2,9 +2,8 @@
 include '../php/conectar.php';
 include '../php/paginaProtegida.php';
 
-//$idGrupo = $_GET["IdGrupo"];
-$idGrupo = 1;
-$idSubcanal = 0;
+$idGrupo = $_GET["IdGrupo"];
+$idSubcanal = $_GET["IdSubcanal"];
 
 //grupo atual
 $query = "SELECT nome from grupo WHERE id_Grupo = $idGrupo";
@@ -33,7 +32,7 @@ function listaSubcanais($conexao, $idGrupo)
     while ($row = mysqli_fetch_assoc($resultado)) {
         echo '
         <div class="sub-canal">
-            <a href="grupo.php?idGrupo=' . $idGrupo . '&idSubcanal=' . $row["Id_Subcanal"] . '"><div class="nome-subcanal">- ' . $row["nome"] . '</div></a>
+            <a href="grupo.php?IdGrupo=' . $idGrupo . '&IdSubcanal=' . $row["Id_Subcanal"] . '"><div class="nome-subcanal">- ' . $row["nome"] . '</div></a>
         </div>
         ';
     }
@@ -72,7 +71,8 @@ function listaMembros($conexao, $idGrupo)
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="grupo.css">
-    <title>Nome do grupo aqui</title>
+    <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
+    <title><?php echo $nomeGrupo ?></title>
 </head>
 
 <body>
@@ -102,7 +102,7 @@ function listaMembros($conexao, $idGrupo)
             <h3>
                 <?php echo $nomeGrupo; ?>
             </h3>
-            <button type="button" class="btn btn-danger">Sair do grupo</button>
+            <a href="../php/sairGrupo.php?IdGrupo=<?php echo $idGrupo ?>"><button type="button" class="btn btn-danger">Sair do grupo</button></a>
         </div>
     </div>
     <main>
@@ -146,7 +146,7 @@ function listaMembros($conexao, $idGrupo)
         <section class="bate-papo">
             <div class="conversa">
                 <iframe
-                    src="mensagens.html?IdGrupo=<?php echo $idGrupo; ?>&IdSubcanal=0&username=<?php echo $_SESSION["Username"]; ?>&idUsername=<?php echo $_SESSION["Id"]; ?>"
+                    src="mensagens.html?IdGrupo=<?php echo $idGrupo; ?>&IdSubcanal=<?php echo $idSubcanal ?>&username=<?php echo $_SESSION["Username"]; ?>&idUsername=<?php echo $_SESSION["Id"]; ?>"
                     style="width: 100%;" id="iframe"></iframe>
             </div>
             <div class="escrever" id="escrever">
@@ -154,8 +154,8 @@ function listaMembros($conexao, $idGrupo)
                 <button id="enviar">Enviar</button>
             </div>
         </section>
-        <input type="hidden" id="idGrupo" value="1">
-        <input type="hidden" id="idSubcanal" value="0">
+        <input type="hidden" id="idGrupo" value="<?php echo $idGrupo ?>">
+        <input type="hidden" id="idSubcanal" value="<?php echo $idSubcanal ?>">
         <input type="hidden" id="username" value="Username">
         <input type="hidden" id="idUsername" value="idUsername">
     </main>
