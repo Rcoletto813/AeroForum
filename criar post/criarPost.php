@@ -24,13 +24,14 @@ include '../php/paginaProtegida.php';
     <nav style="--bs-breadcrumb-divider: '>'; display: flex; text-align: center; justify-content: space-around;"
         aria-label="breadcrumb">
         <ol class="breadcrumb" style="--bs-breadcrumb-margin-bottom: unset;">
+            <li class="breadcrumb-item"><a href="../main/main.php">Retornar para página principal</a></li>
             <li class="breadcrumb-item">Criação</li>
             <li class="breadcrumb-item active" aria-current="page">
                 Escrever post
             </li>
         </ol>
         <div class="usuario">
-            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%">
+            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%"  style="opacity: 0;">
             <span>
                 <a href="#">
                     <?php echo $_SESSION["Username"] ?>

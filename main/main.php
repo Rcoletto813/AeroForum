@@ -20,7 +20,7 @@ function listaGrupo($id_user, $conexao)
         echo '
             <div class="card-grupo">
                 <h2>' . $linha["Nome"] . '</h2>
-                <a href="../grupo/grupo.php?IdGrupo='. $linha["id_Grupo"] .'&IdSubcanal=0"><button class="btn btn-success" >Dar uma olhada</button></a>
+                <a href="../grupo/grupo.php?IdGrupo=' . $linha["id_Grupo"] . '&IdSubcanal=0"><button class="btn btn-success" >Dar uma olhada</button></a>
             </div>';
     }
 }
@@ -40,7 +40,7 @@ function grupos($conexao)
         <section class="grupo section">
             <div class="detalhesGrupo">
                 <div class="esquerda">
-                    <img src="' . $linha["Foto"] . '" alt="imagem grupo">
+                    <img src="' . $linha["Foto"] . '" alt="imagem grupo" width="100" height="100">
                 </div>
                 <div class="central">
                     <div class="infoGrupo">
@@ -50,7 +50,7 @@ function grupos($conexao)
                     </div>
                 </div>
                 <div class="direita">
-                    <a href="../php/adicionarMembro.php?IdGrupo='. $linha["id_Grupo"].'"><button type="button" class="btn btn-success entrar">Participar desse grupo</button></a>
+                    <a href="../php/adicionarMembro.php?IdGrupo=' . $linha["id_Grupo"] . '"><button type="button" class="btn btn-success entrar">Participar desse grupo</button></a>
                 </div>
             </div>
         </section>';
@@ -63,7 +63,7 @@ function posts($conexao)
     FROM post 
     INNER JOIN usuário ON usuário.Id_User = post.Id_User 
     ORDER BY post.id_Post DESC
-    LIMIT 3";
+    LIMIT 2";
 
     $resultado = mysqli_query($conexao, $query);
     while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
@@ -73,7 +73,7 @@ function posts($conexao)
             <p id="descricaoPost">' . $linha["Resumo"] . '</p>
             <div class="info">
                 <div class="container">
-                    <a href="../post/post.php?id= '. $linha["id_Post"] .'"><button type="button" class="btn btn-outline-info">Acessar</button></a>
+                    <a href="../post/post.php?id= ' . $linha["id_Post"] . '"><button type="button" class="btn btn-outline-info">Acessar</button></a>
                     <div class="avaliacao">';
         for ($aval = 0; $aval < $linha["Avaliação"]; $aval++) {
             echo '<span class="fa fa-star checked"></span>';
@@ -89,6 +89,70 @@ function posts($conexao)
             </div>
             </div>
         </section>';
+    }
+}
+
+function notificação($conexao) //trabalhar com as notificações do usuário
+{
+    $query = "SELECT notificação.conteúdo FROM notificação WHERE id_user = '" . $_SESSION["Id"] . "'
+    ORDER BY notificação.data DESC";
+    $resultado = mysqli_query($conexao, $query);
+    /*try {
+        $resultado = mysqli_query($conexao, $query);
+    } catch (Exception $e) //o usuário não possui nenhuma notificação
+    {
+        $num_notifica = 0;
+        echo '
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Caixa de entrada
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                ' . $num_notifica . '
+                <span class="visually-hidden">Mensagens não lidas</span>
+            </span>
+            </button>
+            <ul class="dropdown-menu" style="padding: 8px;">
+                <li><a class="dropdown-item" href="#"><code>Tudo certo por aqui</code></a></li>
+            </ul>
+        </div>
+        ';
+        return;
+    }*/
+
+    //número de notifições:
+    $num_notifica = mysqli_num_rows($resultado);
+
+    if ($num_notifica == 0) {
+        echo '
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Caixa de entrada
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                ' . $num_notifica . '
+                <span class="visually-hidden">Mensagens não lidas</span>
+            </span>
+            </button>
+            <ul class="dropdown-menu" style="padding: 8px;">
+                <li><a class="dropdown-item" href="#"><code>Nenhuma notificação até o momento</code></a></li>
+            </ul>
+        </div>
+        ';
+    } else {
+        echo '
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary position-relative dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Caixa de entrada
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    ' . $num_notifica . '
+                    <span class="visually-hidden">Mensagens não lidas</span>
+                </span>
+            </button>
+            <ul class="dropdown-menu">';
+        while ($linha = mysqli_fetch_array($resultado, MYSQLI_ASSOC)) {
+            echo ''. $linha["conteúdo"] . '';
+        }
+        echo '</ul></div>';
+        //<li><a class="dropdown-item" href="#">conteúdo notificação</a></li>
     }
 }
 ?>
@@ -120,13 +184,17 @@ function posts($conexao)
                     Categorias
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="#">Foguetes</a></li>
-                    <li><a class="dropdown-item" href="#">Satélites</a></li>
-                    <li><a class="dropdown-item" href="#">Aviões</a></li>
-                    <li><a class="dropdown-item" href="#">Helicópteros</a></li>
-                    <li><a class="dropdown-item" href="#">Aeromodelismo</a></li>
-                    <li><a class="dropdown-item" href="#">Foguetemodelismo</a></li>
-                    <li><a class="dropdown-item" href="#">Programação</a></li>
+                    <li><a class="dropdown-item" href="../pesquisa/pesquisa.php?pesquisa=foguete">Foguetes</a></li>
+                    <li><a class="dropdown-item" href="../pesquisa/pesquisa.php?pesquisa=satélite">Satélites</a></li>
+                    <li><a class="dropdown-item" href="../pesquisa/pesquisa.php?pesquisa=avião">Aviões</a></li>
+                    <li><a class="dropdown-item" href="../pesquisa/pesquisa.php?pesquisa=helicópteros">Helicópteros</a>
+                    </li>
+                    <li><a class="dropdown-item"
+                            href="../pesquisa/pesquisa.php?pesquisa=aeromodelismo">Aeromodelismo</a></li>
+                    <li><a class="dropdown-item"
+                            href="../pesquisa/pesquisa.php?pesquisa=foguetemodelismo">Foguetemodelismo</a></li>
+                    <li><a class="dropdown-item" href="../pesquisa/pesquisa.php?pesquisa=programação">Programação</a>
+                    </li>
                 </ul>
             </li>
             <!--<li><a href="#" class="linkPrincipal">Perfil</a></li>-->
@@ -134,9 +202,9 @@ function posts($conexao)
         </ul>
         <nav class="navbar bg-light">
             <div class="container-fluid">
-                <form class="d-flex" role="search">
+                <form class="d-flex" role="search" method="get" action="../pesquisa/pesquisa.php">
                     <input class="form-control me-2" type="search" placeholder="Buscar algum conteúdo"
-                        aria-label="Search">
+                        aria-label="Search" name="pesquisa">
                     <button class="btn btn-outline-primary" type="submit">Pesquisar</button>
                 </form>
             </div>
@@ -144,11 +212,13 @@ function posts($conexao)
     </nav>
     <div class="conteudoPerfil">
         <div class="user">
-            <a href="../criar post/criarPost.php"><button type="button" class="btn btn-info" style="width: 8rem;">Fazer um post</button></a>
+            <a href="../criar post/criarPost.php"><button type="button" class="btn btn-info" style="width: 8rem;">Fazer
+                    um post</button></a>
             <span>|</span>
-            <a href="../criar grupo/criarGrupo.php"><button type="button" class="btn btn-info" style="width: 10rem;">Criar um grupo</button></a>
+            <a href="../criar grupo/criarGrupo.php"><button type="button" class="btn btn-info"
+                    style="width: 10rem;">Criar um grupo</button></a>
             <div class="usuario">
-                <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem">
+                <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" style="opacity: 0;">
                 <span>
                     <a href="#">
                         <?php echo $_SESSION["Username"] ?>
@@ -157,13 +227,23 @@ function posts($conexao)
 
                 <div class="linhaVertical">|</div>
 
-                <button type="button" class="btn btn-primary position-relative">
-                    Caixa de entrada
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                        99+
-                        <span class="visually-hidden">unread messages</span>
-                    </span>
-                </button>
+                <?php echo notificação($conexao); ?>
+
+                <!--<div class="dropdown">
+                    <button type="button" class="btn btn-primary position-relative dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Caixa de entrada
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </div>-->
             </div>
         </div>
     </div>
@@ -246,5 +326,4 @@ function posts($conexao)
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
-
 </html>

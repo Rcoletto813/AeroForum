@@ -159,11 +159,10 @@ function criarContaEmailSenha() {
 function fazerLoginEmailSenha() {
     const email = document.getElementById("emailLogin").value;
     const senha = document.getElementById("senhaLogin").value;
-
+    
     firebase.auth().signInWithEmailAndPassword(email, senha)
         .then((userCredenciais) => {
             const user = userCredenciais.user;
-
             //window.location.href = "../main/main.php?uid=" + user.uid; //id do usuário como parametro
             window.location.href = "../php/verificaLogin.php?uid=" + user.uid; //id do usuário como parametro
         })

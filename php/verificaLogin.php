@@ -5,6 +5,7 @@ include 'conectar.php';
 session_start();
 
 $idUser = $_GET["uid"]; //id do usuário autenticado
+
 $query = "SELECT * FROM usuário WHERE Id_User = '$idUser'";
 
 $resultado = mysqli_query($conexao, $query);

@@ -124,7 +124,7 @@ $valores = mysqli_fetch_assoc($resultado);
             </li>
         </ol>
         <div class="usuario">
-            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%">
+            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%"  style="opacity: 0;">
             <span>
                 <a href="#">
                     <?php echo $_SESSION["Username"]; ?>
@@ -180,7 +180,7 @@ $valores = mysqli_fetch_assoc($resultado);
                 </button>
                 <!--fa-shake-->
                 <button class="toast btn popup btn-comentario" role="alert" aria-live="assertive" aria-atomic="true"
-                    style="display: block; bottom: 0; position: fixed; right: 0; width: inherit; background-color: #81e5e5">
+                    style="display: block; bottom: 0; position: fixed; left: 0; width: 10rem; height: 3rem; background-color: #81e5e5;">
                     <a href="#coments" data-bs-toggle="offcanvas" aria-controls="offcanvasExample"
                         style="color: black;">Acessar comentários</a>
                 </button>

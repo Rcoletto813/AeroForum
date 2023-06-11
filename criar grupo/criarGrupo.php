@@ -1,4 +1,4 @@
-<?php 
+<?php
 include '../php/paginaProtegida.php';
 
 ?>
@@ -23,13 +23,14 @@ include '../php/paginaProtegida.php';
     <nav style="--bs-breadcrumb-divider: '>'; display: flex; text-align: center; justify-content: space-around;"
         aria-label="breadcrumb">
         <ol class="breadcrumb" style="--bs-breadcrumb-margin-bottom: unset;">
+            <li class="breadcrumb-item"><a href="../main/main.php">Retornar para página principal</a></li>
             <li class="breadcrumb-item">Criação</li>
             <li class="breadcrumb-item active" aria-current="page">
                 Criar comunidade
             </li>
         </ol>
         <div class="usuario">
-            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%">
+            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%"  style="opacity: 0;">
             <span>
                 <a href="#">
                     <?php echo $_SESSION["Username"] ?>
@@ -38,7 +39,7 @@ include '../php/paginaProtegida.php';
         </div>
     </nav>
     <main>
-        <form action="registrarGrupo.php" method="post" class="form">
+        <form action="registrarGrupo.php" method="post" class="form" enctype="multipart/form-data">
             <div class="campos">
                 <span class="campoNome">Nome<sup title="Campo obrigatório">*</sup></span>
                 <input type="text" name="nome" placeholder="Coloque aqui o nome da sua comunidade" required autofocus
@@ -48,8 +49,7 @@ include '../php/paginaProtegida.php';
             <div class="campos" id="subcanais">
                 <span class="campoNome">Subcanais<sup title="Campo obrigatório">*</sup></span>
                 <span class="dica"><b>-></b>Insira quantos subcanais de comunicação o seu grupo terá</span>
-                <input type="number" id="numSubcanal">
-
+                <input type="number" id="numSubcanal" required>
                 <!--<input style="margin-top: 10px;" type="text" name="titulo" placeholder="Nome do subcanal" required autofocus class="input titulo form-control">-->
             </div>
             <hr>
@@ -62,6 +62,18 @@ include '../php/paginaProtegida.php';
                 </span>
                 <input type="text" name="tags" class="input tag form-control" required
                     placeholder="Vamos adicionar algumas tags no seu grupo? Assim fica mais fácil de colocá-lo em categorias e fará ele atingir seu público-alvo">
+            </div>
+            <div class="campos">
+                <span class="campoNome">Imagem</span>
+                <span class="dica">
+                    <b>-></b> Selecione uma imagem para a logo do seu grupo. Se não quiser não tem problema, mas pode
+                    ser interessante ter uma.
+                </span>
+                <label for="imagemGrupoArquivo" class="drop-container">
+                    <span class="drop-title">Jogue a imagem aqui</span>
+                    ou
+                    <input type="file" accept="image/*" id="imagemGrupoArquivo" name="imagem">
+                </label>
             </div>
             <div class="campos">
                 <span class="campoNome">Descrição</span>
@@ -102,8 +114,6 @@ include '../php/paginaProtegida.php';
         var subcanaisNome = "";
         const subcanais = document.querySelectorAll(".subCanalNome");
         subcanais.forEach(element => {
-            console.log(element)
-            console.log(element.value)
             subcanaisNome = subcanaisNome + element.value + ", ";
         });
         subcanaisNome = subcanaisNome.slice(0, -2); // remove a última vírgula e espaço
@@ -133,7 +143,19 @@ include '../php/paginaProtegida.php';
             elemPai.appendChild(input);
         }
     })
+    const fileInput = document.getElementById('imagemGrupoArquivo');
 
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+
+        if (file && file.type.startsWith('image/')) {
+            // O arquivo selecionado é uma imagem
+        } else {
+            // O arquivo selecionado não é uma imagem
+            alert("Selecione um arquivo de imagem válido!");
+            fileInput.value = "";
+        }
+    });
 
 </script>
 

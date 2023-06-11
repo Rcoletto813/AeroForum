@@ -1,6 +1,5 @@
 function enviarMensagem(idGrupo, idSubcanal, username, idUsername, conteudo) {
     firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).once('value', function (snapshot) {
-        console.log(snapshot.val());
         const ultimaMsgNumero = Object.keys(snapshot.val()).pop();
         const novaMsg = {
             IdUser: idUsername,
@@ -10,16 +9,7 @@ function enviarMensagem(idGrupo, idSubcanal, username, idUsername, conteudo) {
         };
         firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).child(parseInt(ultimaMsgNumero) + 1).set(novaMsg);
     });
-    /*const novaMsg = {
-        IdUser: idUsername,
-        Username: username,
-        Data: firebase.database.ServerValue.TIMESTAMP,
-        Conteudo: conteudo
-    };*/
-    //console.log(idGrupo, idSubcanal);
-    //firebase.database().ref(`grupos/${idGrupo}/${idGrupo}/${idSubcanal}`).set(novaMsg)
 }
-
 
 document.getElementById("msg").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
@@ -37,3 +27,13 @@ document.getElementById("enviar").addEventListener("click", function () {
     enviarMensagem(idGrupo.value, idSubcanal.value, username.value, idUsername.value, conteudo.value);
     conteudo.value = "";
 });
+
+const user = firebase.auth().currentUser;
+
+if (user) {
+  // O usuário está autenticado
+  console.log("Usuário está autenticado");
+} else {
+  // O usuário não está autenticado
+  console.log("Usuário não está autenticado");
+}

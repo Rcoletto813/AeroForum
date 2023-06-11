@@ -12,5 +12,4 @@ if (mysqli_query($conexao, $query)) {
 } else {
     echo "Erro ao criar o usuário: " . mysqli_error($conexao);
 }
-
 ?>

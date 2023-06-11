@@ -36,7 +36,7 @@ $conteudo = str_replace("'", "\"", $conteudo);
             </li>
         </ol>
         <div class="usuario">
-            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%">
+            <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%"  style="opacity: 0;">
             <span>
                 <a href="#">
                     <?php echo $_SESSION["Username"] ?>

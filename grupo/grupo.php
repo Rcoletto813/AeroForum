@@ -48,13 +48,13 @@ function listaMembros($conexao, $idGrupo)
 
     $resultado = mysqli_query($conexao, $query);
 
-    while($row = mysqli_fetch_assoc($resultado)) {
+    while ($row = mysqli_fetch_assoc($resultado)) {
         echo '
         <div class="user-item">
             <div class="user-avatar">
                 <img src="../imagens/imgPerfilDefault.svg">
             </div>
-            <div class="user-name">'. $row["Username"] . '</div>
+            <div class="user-name">' . $row["Username"] . '</div>
         </div>
     ';
     }
@@ -72,7 +72,9 @@ function listaMembros($conexao, $idGrupo)
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="grupo.css">
     <link rel="shortcut icon" href="../imagens/favicon.ico" type="image/x-icon">
-    <title><?php echo $nomeGrupo ?></title>
+    <title>
+        <?php echo $nomeGrupo ?>
+    </title>
 </head>
 
 <body>
@@ -90,7 +92,7 @@ function listaMembros($conexao, $idGrupo)
                 </li>
             </ol>
             <div class="usuario">
-                <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%">
+                <img src="../imagens/imgPerfilDefault.svg" alt="imagem de perfil" id="perfilImgagem" width="3%"  style="opacity: 0;">
                 <span>
                     <a href="#">
                         <?php echo $_SESSION["Username"]; ?>
@@ -102,7 +104,8 @@ function listaMembros($conexao, $idGrupo)
             <h3>
                 <?php echo $nomeGrupo; ?>
             </h3>
-            <a href="../php/sairGrupo.php?IdGrupo=<?php echo $idGrupo ?>"><button type="button" class="btn btn-danger">Sair do grupo</button></a>
+            <a href="../php/sairGrupo.php?IdGrupo=<?php echo $idGrupo ?>"><button type="button"
+                    class="btn btn-danger">Sair do grupo</button></a>
         </div>
     </div>
     <main>
@@ -119,7 +122,7 @@ function listaMembros($conexao, $idGrupo)
                         data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div class="user-list">
-                                <?php listaMembros($conexao, $idGrupo);?>
+                                <?php listaMembros($conexao, $idGrupo); ?>
                             </div>
                         </div>
                     </div>
@@ -141,7 +144,10 @@ function listaMembros($conexao, $idGrupo)
                     </div>
                 </div>
             </div>
-            <h4 style="margin-left: 10px;">Canal atual: <a href="#" style="text-decoration: underline; cursor: pointer;"><?php echo $nomeSubcanal;?></a></h4>
+            <h4 style="margin-left: 10px;">Canal atual: <a href="#"
+                    style="text-decoration: underline; cursor: pointer;">
+                    <?php echo $nomeSubcanal; ?>
+                </a></h4>
         </section>
         <section class="bate-papo">
             <div class="conversa">
@@ -156,8 +162,8 @@ function listaMembros($conexao, $idGrupo)
         </section>
         <input type="hidden" id="idGrupo" value="<?php echo $idGrupo ?>">
         <input type="hidden" id="idSubcanal" value="<?php echo $idSubcanal ?>">
-        <input type="hidden" id="username" value="Username">
-        <input type="hidden" id="idUsername" value="idUsername">
+        <input type="hidden" id="username" value="<?php echo $_SESSION["Username"]; ?>">
+        <input type="hidden" id="idUsername" value="<?php echo $_SESSION["Id"]; ?>">
     </main>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -165,7 +171,8 @@ function listaMembros($conexao, $idGrupo)
     crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-<script src="app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="../config/app.js"></script>
 <script src="enviarMsg.js"></script>
 <script>
     //height do main
@@ -191,12 +198,12 @@ function listaMembros($conexao, $idGrupo)
         }, 900);
     });
     // define a função para dar scroll down no iframe
-    function scrollDown() {
+    /*function scrollDown() {
         iframe.contentWindow.scrollTo(0, iframe.contentWindow.document.body.scrollHeight);
     }
 
     // define o intervalo para chamar a função scrollDown()
-    let scrollInterval = setInterval(scrollDown, 1000); // define o intervalo de 1 segundo
+    let scrollInterval = setInterval(scrollDown, 1000); // define o intervalo de 1 segundo*/
 
 </script>
 
